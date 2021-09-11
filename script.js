@@ -1,30 +1,31 @@
-// Assignment Code
+// assign global variables
 var generateBtn = document.querySelector("#generate");
-var nums = "0123456789";
+var nums = "00112233445566778899";
 var lowers = "abcdefghijklmnopqrstuvwxyz";
 var uppers = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-var specs = "~!@#$%^&*()_+-={}[]";
-var blankPassword = " ";
+var specs = "~!@#$%^&*()_+-={}[]<>?";
+var blankPassword = "";
+var password = "";
 
 // Write password to the #password input
 function writePassword() {
-  var password = generatePassword();
+  generatePassword();
   var passwordText = document.querySelector("#password");
   passwordText.value = password;
 
 }
 
-// gets pass length and loops if incorrect info entered or stops if cancel is selected
+// gets pass length and loops if incorrect info entered
 function passLength() {
   pLength = Number(prompt("How many characters would you like your password to have?", "Type a number between 8 and 128"));
-  if (8 < pLength && pLength < 128 ) {
+  if (8 < pLength && pLength < 128) {
         alert("Awesome, your password will be " + pLength + " characters long");
         lowerChar();
         upperChar();
         numChar();
         specChar();
   } else if  (pLength == false) {
-
+// if cancel is clicked, closes prompt and returns to page
     } else {
       alert("Sorry please input a number between 8 and 128");
       passLength();
@@ -76,19 +77,20 @@ function specChar() {
 }
 
 // resets blankPassword to blank after user generates a password in case they wish to change criteria
+// sets password to blank so newly generated passwords dont stack on top of one another
 function generatePassword() {
-  blankPassword = " ";
+  blankPassword = "";
+  password = "";
   passLength();
 
+  // selects a random character from the blankPassword variable for number of characters selected and returns password generated
   for (i = 0; i < pLength; i++) {
-
+    password += blankPassword.charAt(Math.floor((Math.random() * blankPassword.length)));
   }
-
+  return password;
 }
 
 
-
-
-// Add event listener to generate button
+// on clicking of the generate button, runs function writePassword
 generateBtn.addEventListener("click", writePassword);
 
